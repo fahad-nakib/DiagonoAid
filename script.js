@@ -40,26 +40,54 @@ analyzeBtn.addEventListener("click", () => {
 
   if (chart) chart.destroy(); // Reset chart if already exists
 
-  chart = new Chart(ctx, {
-    type: "bar",
-    data: {
-      labels,
-      datasets: [{
-        label: "Probability (%)",
-        data,
-        backgroundColor: "#00796b"
-      }]
+//   chart = new Chart(ctx, {
+//     type: "bar",
+//     data: {
+//       labels,
+//       datasets: [{
+//         label: "Probability (%)",
+//         data,
+//         backgroundColor: "#00796b"
+//       }]
+//     },
+//     options: {
+//       responsive: false,
+//       scales: {
+//         y: {
+//           beginAtZero: true,
+//           max: 100
+//         }
+//       }
+//     }
+//   });
+
+chart = new Chart(ctx, {
+  type: "bar",
+  data: {
+    labels,
+    datasets: [{
+      label: "Probability (%)",
+      data,
+      backgroundColor: "#00796b"
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false, // Important for flexible height
+    scales: {
+      y: {
+        beginAtZero: true,
+        max: 100
+      }
     },
-    options: {
-      responsive: true,
-      scales: {
-        y: {
-          beginAtZero: true,
-          max: 100
-        }
+    plugins: {
+      legend: {
+        display: false
       }
     }
-  });
+  }
+});
+
 
   // Render cards
   diseaseCards.innerHTML = "";
