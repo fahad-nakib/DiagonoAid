@@ -1,0 +1,74 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(to right, #e0f7fa, #f1f8e9);
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+h1 {
+  font-size: 2.5rem;
+  color: #00796b;
+}
+
+.subtitle {
+  margin-bottom: 2rem;
+  font-size: 1.2rem;
+  color: #555;
+}
+
+.upload-section input {
+  padding: 1rem;
+  border: 2px dashed #00796b;
+  border-radius: 8px;
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+#analyzeBtn {
+  margin-top: 1.5rem;
+  padding: 0.8rem 2rem;
+  background-color: #00796b;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.chart-container {
+  margin-top: 2rem;
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2rem;
+  justify-content: center;
+}
+
+.card {
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  padding: 1rem;
+  width: 250px;
+  text-align: left;
+}
+
+.card h3 {
+  color: #00796b;
+  margin-bottom: 0.5rem;
+}
+
+.card ul {
+  padding-left: 1rem;
+}

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DiagonoAid - Medical Report Analyzer</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>DiagonoAid</h1>
+    <p class="subtitle">Upload your medical report to analyze potential health risks</p>
+
+    <div class="upload-section">
+      <input type="file" id="reportUpload" accept=".pdf,image/*" />
+    </div>
+
+    <button id="analyzeBtn" style="display: none;">Analyze Report</button>
+
+    <div class="chart-container">
+      <canvas id="diseaseChart"></canvas>
+    </div>
+
+    <div id="diseaseCards" class="card-container"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
