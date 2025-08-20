@@ -12,14 +12,18 @@
     <h1>DiagonoAid</h1>
     <p class="subtitle">Upload your medical report to analyze potential health risks</p>
 
-    <div class="upload-section">
-      <input type="file" id="reportUpload" accept=".pdf,image/*" />
-    </div>
-
+    <form action="/" method="post" id="reportForm" enctype="multipart/form-data">
+      <div class="upload-section">
+        <input type="file" id="reportUpload" name="report" accept=".pdf,image/*"/>
+      </div>
+    </form>
+    
     <button id="analyzeBtn" style="display: none;">Analyze Report</button>
 
     <div class="chart-container">
-      <canvas id="diseaseChart"></canvas>
+      <canvas id="diseaseChart" style="height: 400px;"></canvas>
+
+      <!-- <canvas id="diseaseChart"></canvas> -->
     </div>
 
     <div id="diseaseCards" class="card-container"></div>

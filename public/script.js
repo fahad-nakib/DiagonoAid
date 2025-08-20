@@ -7,11 +7,19 @@ let chart;
 
 reportUpload.addEventListener("change", () => {
   if (reportUpload.files.length > 0) {
+    document.getElementById("reportForm").submit();
     analyzeBtn.style.display = "inline-block";
   }
 });
 
 analyzeBtn.addEventListener("click", () => {
+  fetch("/analyze")
+    .then(response => response.json())
+    // .then(data => {
+    //   renderChart(data.chartData);
+    //   renderCards(data.diseases);
+    // })
+    .catch(error => console.error("Error calling /analyze:", error));
   // Simulated data (replace with actual backend response)
   const diseases = [
     {
@@ -31,6 +39,24 @@ analyzeBtn.addEventListener("click", () => {
       probability: 40,
       description: "A condition where you lack enough healthy red blood cells.",
       tips: ["Eat iron-rich foods", "Take supplements if prescribed", "Avoid excessive caffeine"]
+    },
+        {
+      name: "Diabetes2",
+      probability: 78,
+      description: "A chronic condition that affects how your body processes blood sugar.",
+      tips: ["Maintain a healthy diet", "Exercise regularly", "Monitor blood sugar levels"]
+    },
+    {
+      name: "Hypertension2",
+      probability: 65,
+      description: "High blood pressure that can lead to serious health issues.",
+      tips: ["Reduce salt intake", "Manage stress", "Regular check-ups"]
+    },
+    {
+      name: "Anemia2",
+      probability: 40,
+      description: "A condition where you lack enough healthy red blood cells.",
+      tips: ["Eat iron-rich foods", "Take supplements if prescribed", "Avoid excessive caffeine"]
     }
   ];
 
@@ -40,53 +66,36 @@ analyzeBtn.addEventListener("click", () => {
 
   if (chart) chart.destroy(); // Reset chart if already exists
 
-//   chart = new Chart(ctx, {
-//     type: "bar",
-//     data: {
-//       labels,
-//       datasets: [{
-//         label: "Probability (%)",
-//         data,
-//         backgroundColor: "#00796b"
-//       }]
-//     },
-//     options: {
-//       responsive: false,
-//       scales: {
-//         y: {
-//           beginAtZero: true,
-//           max: 100
-//         }
-//       }
-//     }
-//   });
 
-chart = new Chart(ctx, {
-  type: "bar",
-  data: {
-    labels,
-    datasets: [{
-      label: "Probability (%)",
-      data,
-      backgroundColor: "#00796b"
-    }]
-  },
-  options: {
-    responsive: true,
-    maintainAspectRatio: false, // Important for flexible height
-    scales: {
-      y: {
-        beginAtZero: true,
-        max: 100
-      }
+  chart = new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels,
+      datasets: [{
+        label: "Probability (%)",
+        data,
+        backgroundColor: "#00796b"
+      }]
     },
-    plugins: {
-      legend: {
-        display: false
+    options: {
+      responsive: true,
+      maintainAspectRatio: false, // Important for flexible height
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            stepSize: 10 // Adjust step size for better readability
+          },     
+          max: 100    
+        }
+      },
+      plugins: {
+        legend: {
+          display: false
+        }
       }
     }
-  }
-});
+  });
 
 
   // Render cards
