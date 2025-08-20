@@ -5,7 +5,7 @@ import json
 import PIL.Image
 import os
 import google.generativeai as genai
-genai.configure(api_key="AIzaSyDvwICRzk7icZC-z1Us1o9kTzKjFpK_BEg")
+genai.configure(api_key="AIzaSyDvwICRzk-Replace your own gemini api key")
 
 #img=PIL.Image.open('blood2.png')
 
