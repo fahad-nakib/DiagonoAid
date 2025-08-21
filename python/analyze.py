@@ -6,12 +6,7 @@ import joblib
 import PIL.Image
 import os
 import google.generativeai as genai
-<<<<<<< HEAD
-# from IPython.display import display
-=======
-genai.configure(api_key="AIzaSyDvwICRzk-Replace your own gemini api key")
->>>>>>> 49e07b6aa74aa4e7dcdaf5075785ed7392ce61b5
-
+# Configure the Google Generative AI API
 genai.configure(api_key="AIzaSyBHqbr3O6DM7snkq3fwa6ZB2uQPj6ZqQs0")
 
 #img = PIL.Image.open('blood2.png')
@@ -125,7 +120,7 @@ df_normalized = pd.DataFrame([normalized_report])
 
 print("Normalized Report Data (0-1 Scale):")
 print(df_normalized.to_string())
-<<<<<<< HEAD
+
 
 # new----------------------------
 sample_report_data = {
@@ -204,5 +199,3 @@ probabilities_df_imputed = pd.DataFrame(predicted_probabilities_imputed, columns
 
 print("\nPredicted probabilities for each disease (after imputation) using loaded model:")
 print(probabilities_df_imputed)
-=======
->>>>>>> 49e07b6aa74aa4e7dcdaf5075785ed7392ce61b5
