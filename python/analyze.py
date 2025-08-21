@@ -57,7 +57,7 @@ medical_terms = {
 
 response = model.generate_content([text_prompt, img])
 extracted_value = response.text
-print("Response received!")
+#print("Response received!")
 
 try:
     json_string = extracted_value.strip()
@@ -118,8 +118,8 @@ for metric, value in extracted_values.items():
 
 df_normalized = pd.DataFrame([normalized_report])
 
-print("Normalized Report Data (0-1 Scale):")
-print(df_normalized.to_string())
+# print("Normalized Report Data (0-1 Scale):")
+# print(df_normalized.to_string())
 
 
 # new----------------------------
@@ -179,8 +179,8 @@ for col in sample_report_imputed.columns:
     mask = (sample_report_imputed[col] < 0) | (sample_report_imputed[col] > 1)
     sample_report_imputed.loc[mask, col] = mean_val
 
-print("\nSample report after imputation:")
-print(sample_report_imputed)
+# print("\nSample report after imputation:")
+# print(sample_report_imputed)
 
 # Load the trained model and label encoder
 file_path2 = os.path.join(script_dir, 'xgb_disease_model.pkl')
@@ -197,5 +197,55 @@ class_labels = loaded_label_encoder.classes_
 # Create a DataFrame to display the probabilities
 probabilities_df_imputed = pd.DataFrame(predicted_probabilities_imputed, columns=class_labels)
 
-print("\nPredicted probabilities for each disease (after imputation) using loaded model:")
-print(probabilities_df_imputed)
+# print("\nPredicted probabilities for each disease (after imputation) using loaded model:")
+# print(probabilities_df_imputed)
+
+
+# Generate the final report
+# Finsl touch-------
+
+# Convert to native float
+disease_list = [
+    {"name": col, "probability": float(round(probabilities_df_imputed[col][0] * 100, 2))}
+    for col in probabilities_df_imputed.columns
+]
+
+# Create prompt
+text_prompt = f"""
+Based on the following disease probabilities, generate a response in this exact format:
+
+[
+  {{
+    name: "DiseaseName",
+    probability: 35,
+    description: "2–3 line summary explaining the implication of the probability.",
+    tips: ["Tip 1", "Tip 2", "Tip 3", "Tip 4", "Tip 5"]
+  }},
+  ...
+]
+
+Here is the input data:
+{json.dumps(disease_list, indent=2)}
+"""
+
+# Generate response
+response = model.generate_content(text_prompt)
+DiseaseReport = response.text
+#print(DiseaseReport)
+try:
+    json_string = DiseaseReport.strip()
+    if json_string.startswith("```json"):
+        json_string = json_string[7:]
+    if json_string.endswith("```"):
+        json_string = json_string[:-3]
+    json_string = json_string.strip()
+    extracted_values = json.loads(json_string)
+except json.JSONDecodeError as e:
+    print(f"Error decoding JSON from response.text: {e}")
+    extracted_values = {}
+except AttributeError:
+    print("Error: 'response' object not found. Please ensure the previous cell has been run.")
+    extracted_values = {}
+#print(DiseaseReport)
+print(json.dumps(extracted_values))
+

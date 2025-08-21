@@ -37,7 +37,7 @@ app.get("/analyze", (req, res) => {
     let output = '';
     pythonProcess.stdout.on('data', data => {
         output += data.toString();
-        console.log(`Python output: ${data}`);
+        //console.log(`Python output: ${data}`);
     });
     pythonProcess.stderr.on('data', data => {
         console.error(`Python error: ${data}`);
@@ -50,7 +50,8 @@ app.get("/analyze", (req, res) => {
         // }
         try {
             const result = JSON.parse(output);
-            res.json(result); // ✅ Always send a response
+            res.status(200).json(result); // Always send a response
+            console.log((result));
         } catch (err) {
             res.status(500).json({ error: "Failed to parse Python output" });
         }
