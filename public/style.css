@@ -24,6 +24,7 @@ h1 {
   color: #555;
 }
 
+
 .upload-section input {
   padding: 1rem;
   border: 2px dashed #00796b;
@@ -44,6 +45,8 @@ h1 {
 }
 
 .chart-container {
+  position: relative;
+  height: 400px;
   margin-top: 2rem;
 }
 
@@ -71,4 +74,30 @@ h1 {
 
 .card ul {
   padding-left: 1rem;
+}
+
+/* Spinner styles */
+
+#spinnerContainer {
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* background-color: #e0f2f1; */
+  border-radius: 8px;
+}
+
+.spinner {
+  width: 60px;
+  height: 60px;
+  border: 6px solid #b2dfdb;
+  border-top: 6px solid #00796b;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  display: none; /* Initially hidden */
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
