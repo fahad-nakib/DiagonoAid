@@ -9,7 +9,7 @@ from sklearn.preprocessing import StandardScaler
 import google.generativeai as genai
 
 # Configure Gemini
-genai.configure(api_key="AIzaSyBHqbr3O6DM7snkq3fwa6ZB2uQPj6ZqQs0")
+genai.configure(api_key="Place your own api key.....")   # *** IMPORTANT: Use your own API key here ***
 
 # Locate first image in uploads/
 uploads_dir = os.path.join(os.path.dirname(__file__), '..', 'uploads')
