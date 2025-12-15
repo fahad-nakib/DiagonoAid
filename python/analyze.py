@@ -6,10 +6,13 @@ import numpy as np
 import pandas as pd
 from PIL import Image
 from sklearn.preprocessing import StandardScaler
+import base64
+import io
+from openai import OpenAI
 import google.generativeai as genai
 
 # Configure Gemini
-genai.configure(api_key="Place your own api key.....")   # *** IMPORTANT: Use your own API key here ***
+# genai.configure(api_key="Place your own api key.....")   # *** IMPORTANT: Use your own API key here ***
 
 # Locate first image in uploads/
 uploads_dir = os.path.join(os.path.dirname(__file__), '..', 'uploads')
@@ -18,6 +21,14 @@ if not image_files:
     raise FileNotFoundError("No image files found in the uploads folder.")
 img_path = os.path.join(uploads_dir, image_files[0])
 img = Image.open(img_path)
+
+# Save the image to a bytes buffer (this step is to ensure it's in a format for encoding)
+buffer = io.BytesIO()
+img.save(buffer, format="PNG") # You might need to specify the original format if it's not PNG
+image_bytes = buffer.getvalue()
+
+# 2. Encode the image bytes to a base64 string
+encoded_string = base64.b64encode(image_bytes).decode('utf-8')
 
 # Gemini prompt for extracting values
 text_prompt = """
@@ -51,12 +62,39 @@ medical_terms = {
 """
 
 # Extract values using Gemini
-model = genai.GenerativeModel('gemini-2.5-flash')
-response = model.generate_content([text_prompt, img])
-raw_text = response.text.strip()
+# model = genai.GenerativeModel('gemini-2.5-flash')
+# response = model.generate_content([text_prompt, img])
+# raw_text = response.text.strip()
 #print("Raw Gemini response:")
 #print(repr(raw_text))
+client = OpenAI(
+    base_url="https://openrouter.ai/api/v1",
+    api_key="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",
+)
 
+completion = client.chat.completions.create(
+    extra_body={},
+    model="google/gemini-2.5-flash-image-preview",
+    messages=[
+        {
+            "role": "user",
+            "content": [
+                {
+                    "type": "text",
+                    "text": text_prompt
+                },
+                {
+                    "type": "image_url",
+                    "image_url": {
+                        "url": f"data:image/png;base64,{encoded_string}"
+                    }
+                }
+            ]
+        }
+    ]
+)
+
+raw_text = completion.choices[0].message.content
 # Extract JSON block using regex
 match = re.search(r"```json\s*(\{.*?\})\s*```", raw_text, re.DOTALL)
 if match:
@@ -142,8 +180,30 @@ Here is the input data:
 {json.dumps(disease_list, indent=2)}
 """
 
-summary_response = model.generate_content(summary_prompt)
-summary_text = summary_response.text.strip()
+
+summary_response = client.chat.completions.create(
+    extra_body={},
+    model="google/gemini-2.5-flash-image-preview",
+    messages=[
+        {
+            "role": "user",
+            "content": [
+                {
+                    "type": "text",
+                    "text": summary_prompt
+                },
+                {
+                    "type": "image_url",
+                    "image_url": {
+                        "url": f"data:image/png;base64,{encoded_string}"
+                    }
+                }
+            ]
+        }
+    ]
+)
+# summary_response = model.generate_content(summary_prompt)
+summary_text = summary_response.choices[0].message.content
 
 # Clean and parse final report
 if summary_text.startswith("```json"):
