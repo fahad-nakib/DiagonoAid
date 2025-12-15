@@ -69,7 +69,7 @@ medical_terms = {
 #print(repr(raw_text))
 client = OpenAI(
     base_url="https://openrouter.ai/api/v1",
-    api_key="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",
+    api_key="YOUR OPENROUTER_API_KEY"  # *** IMPORTANT: Use your own API key here ***,
 )
 
 completion = client.chat.completions.create(
