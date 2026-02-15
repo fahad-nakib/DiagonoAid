@@ -3,11 +3,11 @@
 **Blood Disease Risk Assessment from Visual Medical Reports Using ML and Generative AI**  
 Author: *Md. Fahad Nakib*
 
-## 🩺 Overview
+## Overview
 
 DiagonoAid is a web-based diagnostic assistant that enables users to upload scanned blood reports and receive AI-powered health insights. The system combines machine learning and generative AI to extract medical metrics from images, predict disease probabilities, and generate personalized summaries and health tips.
 
-## 🚀 Features
+## Features
 
 - Upload visual medical reports (PDF or image)
 - Extract key health metrics using multimodal generative AI
@@ -16,14 +16,14 @@ DiagonoAid is a web-based diagnostic assistant that enables users to upload scan
 - Generate human-readable summaries and health tips
 - Interactive web interface for non-technical users
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - **Frontend**: HTML, CSS, JavaScript, Chart.js  
 - **Backend**: Node.js, Express, Multer  
 - **ML Pipeline**: Python, XGBoost, scikit-learn, pandas  
 - **AI Integration**: Google Generative AI (Gemini)
 
-## 📁 Project Structure
+## Project Structure
 
 - `public/` – Frontend files  
 - `uploads/` – Temporary storage for uploaded reports  
@@ -31,7 +31,7 @@ DiagonoAid is a web-based diagnostic assistant that enables users to upload scan
 - `.pkl` files – Trained model and encoder  
 - `server.js` – Node.js backend logic
 
-## ⚙️ How to Run
+## How to Run
 
 1. Install Node.js dependencies:
    
